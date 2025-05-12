@@ -1,0 +1,83 @@
+.content {
+    background-color: rgb(240, 231, 231); /* Fondo blanco */
+    filter: opacity(90%);
+    width: 80%;
+    max-width: 800px;
+    padding: 60px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Sombra para resaltar */
+    border-radius: 10px; /* Bordes redondeados */
+    text-align: left;
+    z-index: 2;
+}
+.content p {
+    font-size: large;
+    max-width: 600px; /* Limita el ancho del texto */
+    text-align: left;
+    margin-left: 20px; /* Espacio extra a la izquierda */
+}
+.content h1{
+    font-family: PixelFont;
+    font-size: large;
+    color: rgb(32, 139, 127);
+}
+
+.normal-image{
+    width: 120px; /* Tamaño pequeño */
+    height: 120px;
+}
+
+.overlay-text-image {
+    position: absolute; /* Posiciona la imagen de forma absoluta */
+    top: 10%; /* Ajusta la posición vertical (puedes modificar este valor) */
+    left: 50%; /* Centra horizontalmente */
+    transform: translate(-50%, -50%); /* Ajusta el centro de la imagen */
+    width: 600px; /* Ajusta el tamaño de la imagen */
+    height: auto; /* Mantiene la proporción de la imagen */
+    z-index: 4;
+}
+button {
+    background: linear-gradient(90deg, #32a852, #28a745); /* Degradado de colores */
+    color: white; /* Texto blanco */
+    font-family: 'PixelFont', sans-serif; /* Fuente personalizada */
+    font-size: 16px; /* Tamaño del texto */
+    padding: 10px 20px; /* Espaciado interno */
+    border: none; /* Sin bordes */
+    border-radius: 8px; /* Bordes redondeados */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Sombra para resaltar */
+    transition: all 0.3s ease; /* Transición suave para los efectos */
+}
+
+button:hover {
+    background: linear-gradient(90deg, #28a745, #32a852); /* Cambia el degradado al pasar el mouse */
+    transform: scale(1.05); /* Aumenta ligeramente el tamaño */
+    box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.3); /* Aumenta la sombra */
+}
+
+button:active {
+    transform: scale(0.95); /* Reduce ligeramente el tamaño al hacer clic */
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Reduce la sombra */
+}
+input[type="text"], input[type="time"] {
+    width: 90%; /* Ajusta el ancho de las entradas */
+    max-width: 500px; /* Ancho máximo */
+    padding: 10px; /* Espaciado interno */
+    margin: 10px 0; /* Espaciado entre entradas */
+    font-size: 16px; /* Tamaño del texto */
+    font-family: 'Arial', sans-serif; /* Fuente legible */
+    border: 1px solid #ccc; /* Borde gris claro */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    transition: all 0.3s ease; /* Transición suave para los efectos */
+}
+
+input[type="text"]:focus, input[type="time"]:focus {
+    border-color: #28a745; /* Cambia el color del borde al enfocar */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Aumenta la sombra */
+    outline: none; /* Elimina el borde azul predeterminado */
+}
+
+input::placeholder {
+    color: #aaa; /* Color del texto del placeholder */
+    font-style: italic; /* Estilo cursivo para el placeholder */
+}

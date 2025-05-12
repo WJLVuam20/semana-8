@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ventanilla Única - Alcaldía</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='estilo.css') }}">
+    <style>
+    body {
+            background-image: url("{{ url_for('static', filename='wallpaper.png') }}") ;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex; /* Activa Flexbox */
+            justify-content: center; /* Centra horizontalmente */
+            align-items: center; /* Centra verticalmente */
+            height: 100vh; /* Altura completa de la ventana */
+            margin: 0; /* Elimina márgenes predeterminados */
+            background-color: #f5f5f5; /* Color de fondo opcional */
+    }
+    body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Filtro oscuro */
+            backdrop-filter: blur(5px); /* Efecto de desenfoque */
+            z-index: 1;
+    }
+    </style>
+</head>
+<body>
+    <div>
+        <img src="{{ url_for('static', filename='adm.gif') }}" alt="Alcaldía" class="overlay-text-image">
+    </div>
+    <div class="content">
+        <h2>Agregar ciudadano a la fila</h2>
+        <form method="post" action="/add">
+            <input type="text" name="cedula" placeholder="Cédula" required><br>
+            <input type="text" name="nombre" placeholder="Nombre" required><br>
+            <input type="text" name="tramite" placeholder="Tipo de trámite" required><br>
+            <input type="time" name="hora" placeholder="Hora de llegada" required><br>
+            <button type="submit">Agregar</button>
+        </form>
+        <h2>Siguiente en fila:</h2>
+        {% if next_citizen %}
+            <p>{{ next_citizen }}</p>
+        {% else %}
+            <p>No hay ciudadanos en espera.</p>
+        {% endif %}
+        <form action="/serve">
+            <button type="submit">Atender ciudadano</button>
+        </form>
+    </div>
+</body>
+</html>
