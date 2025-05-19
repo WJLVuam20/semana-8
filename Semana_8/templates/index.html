@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Transcriptor de Audio</title>
+</head>
+<body>
+    <h1>Transcriptor de Voz</h1>
+    <button id="startBtn">🎙️ Empezar grabación</button>
+    <button id="stopBtn" disabled>🛑 Detener y enviar</button>
+    <p id="status">Esperando...</p>
+    <p><strong>Texto transcrito:</strong></p>
+    <pre id="result"></pre>
+
+    <script>
+        let mediaRecorder;
+        let audioChunks = [];
+
+        const startBtn = document.getElementById('startBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const status = document.getElementById('status');
+        const result = document.getElementById('result');
+
+        startBtn.addEventListener('click', async () => {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                mediaRecorder = new MediaRecorder(stream);
+                audioChunks = [];
+
+                mediaRecorder.ondataavailable = event => {
+                    if (event.data.size > 0) {
+                        audioChunks.push(event.data);
+                    }
+                };
+
+                mediaRecorder.onstop = async () => {
+                    const blob = new Blob(audioChunks, { type: 'audio/wav' });
+                    const formData = new FormData();
+                    formData.append('audio', blob, 'grabacion.wav');
+
+                    status.textContent = 'Enviando audio...';
+
+                    const response = await fetch('/transcribe', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    const data = await response.json();
+                    if (data.text) {
+                        result.textContent = data.text;
+                        status.textContent = 'Transcripción completa';
+                    } else {
+                        result.textContent = '';
+                        status.textContent = 'Error: ' + (data.error || 'desconocido');
+                    }
+                };
+
+                mediaRecorder.start();
+                status.textContent = 'Grabando...';
+                startBtn.disabled = true;
+                stopBtn.disabled = false;
+            } catch (err) {
+                status.textContent = 'Error al acceder al micrófono: ' + err.message;
+            }
+        });
+
+        stopBtn.addEventListener('click', () => {
+            if (mediaRecorder && mediaRecorder.state === 'recording') {
+                mediaRecorder.stop();
+                startBtn.disabled = false;
+                stopBtn.disabled = true;
+                status.textContent = 'Procesando audio...';
+            }
+        });
+    </script>
+</body>
+</html>
